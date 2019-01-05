@@ -1,8 +1,8 @@
 # Thinkpad-T460p-OSX-EFI
 * Hackintosh OSX EFI
-* T460p i7-6820HQ | HD530 | 16G-DDR4 | 2k-Screen | Sata3-SSD-128G | BCM94352z
+* T460p i7-6820HQ | HD530 | 16G-DDR4 2133 | 2k-Screen | Sata3-SSD-500G | BCM94352z
 * currently on macOS (Version 10.13.6)
-* This repo is based on : [scottsanett repo](https://github.com/scottsanett/M5510-4K-High-Sierra-Installation)
+* This repo is based on : [soulomoon/Dell-Precision-5510-High-Sierra](https://github.com/soulomoon/Dell-Precision-5510-High-Sierra) && [corenel/XPS9550-macOS](https://github.com/corenel/XPS9550-macOS)
 
 ## 🍺 Working:
 
@@ -41,7 +41,7 @@
 [10.12和10.13的核显framebuffer五国问题解决方案汇总](http://bbs.pcbeta.com/forum.php?mod=viewthread&tid=1696023)
 
 
-## HDMI && miniDP
+## HDMI && miniDP support
 Inorder for hdmi to be able to output, you should add
 
 ``` bash
@@ -52,13 +52,29 @@ Inorder for hdmi to be able to output, you should add
 under `ConfigMap->dict` in `/System/Library/Extensions/AppleGraphicsControl.kext/Contents/PlugIns/AppleGraphicsDevicePolicy.kext/Contents/Info.plist`  
 and rebuild kext cache using : `sudo kextcache -i /`
 
+### 一个更妙的办法（不用担心每次安全更新后失效）
+
+使用 [corenel/XPS9550-macOS repo](https://github.com/corenel/XPS9550-macOS/tree/master/Kexts) 目录里的`AppleGraphicsDevicePolicyInjector.kext`放入/Library/Extensions，重建缓存。
+
+## 变频
+
+使用 [corenel/XPS9550-macOS repo](https://github.com/corenel/XPS9550-macOS/tree/master/Kexts) 目录里的
+`X86PlatformPluginInjector.kext`放入/Library/Extensions，重建缓存。因为我的CPU是原生型号，其实不用搞这些花里胡哨的“优化”变频也很棒。
+也可以使用如下原理类似的命令来实现完美HWP：
+`➜ cd /tmp && curl -s https://raw.githubusercontent.com/Piker-Alpha/freqVectorsEdit.sh/master/freqVectorsEdit.sh > /tmp/freqVectorsEdit.sh && chmod +x freqVectorsEdit.sh && /tmp/freqVectorsEdit.sh && sudo rm -rf /tmp/freqVectorsEdit.sh && sudo rm -rf /tmp/Mac-*.bin`
+
 
 ## X86PlatformPlugin:
 
-> 通常，我们可以通过勾选config的"PlusinType"加载X86，来实现更完整的节能选项，勾选后：
+> 通常，我们可以通过勾选config的"PluginType"加载X86，来实现更完整的节能选项，勾选后：
 ``` bash
   ~ kextstat| grep -i x86
   142    1 0xffffff7f837f3000 0x17000    0x17000    com.apple.driver.X86PlatformPlugin (1.0.0) 75F8D5F2-9BB7-3709-987C-35B5C1FCB727 <117 64 22 13 11 7 6 5 4 3 1>
   146    1 0xffffff7f8380a000 0x7000     0x7000     com.apple.driver.X86PlatformShim (1.0.0) 78933162-E3FE-3568-B4E0-6A6BD9DEA64A <142 117 13 7 4 3>
 
 ```
+
+## HiDPI
+
+可以参考：[国光博客](http://sqlsec.com/2018/09/hidpi.html)
+`➜ sh -c "$(curl -fsSL https://raw.githubusercontent.com/xzhih/one-key-hidpi/master/hidpi-zh.sh)"`

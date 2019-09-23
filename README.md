@@ -44,7 +44,7 @@ cd Thinkpad-T460p-OSX-EFI
 | HDMI        | √      |  工作但不支持热拔插   |
 | miniDP        | √      |  工作正常   |
 | 有线网卡        | √      | Intel I219LM2      |
-| WiFi        | √      |   BCM-93452z    |
+| WiFi        | √      |   BCM-94352z    |
 | 蓝牙        | √      |       |
 | 📹摄像头        | √      |       |
 | USB-3.0        | √      |   速度：	最大 5 Gb/秒 |
@@ -107,4 +107,4 @@ and rebuild kext cache using : `sudo kextcache -i /`
 
 可以参考：[国光博客](http://sqlsec.com/2018/09/hidpi.html)
 
-`➜ sh -c "$(curl -fsSL https://raw.githubusercontent.com/xzhih/one-key-hidpi/master/hidpi-zh.sh)"`
+`➜ sh -c "$(curl -fsSL https://raw.githubusercontent.com/xzhih/one-key-hidpi/master/hidpi.sh)"`
